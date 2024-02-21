@@ -68,7 +68,8 @@ This framework provides a foundation for creating interactive Pyxel applications
 
 ## Behind the Scenes: Drawing an Oval
 
-Unlike the built-in `pyxel.circ` and `pyxel.rect` functions, Pyxel does not provide a native function to draw ovals. The `draw_oval` method in `Button.py` demonstrates a custom approach to achieve this. It calculates the positions of a series of points along the perimeter of an ellipse using the formula for an ellipse in polar coordinates, plotting each point to create the oval shape.
+Pyxel has not any declaration about `pyxel.text()` size, so i had to aproximately calculate it for each shape.
+The approximate text size calculation is based on the length of the text string multiplied by an arbitrary value. This value is used as a rough estimate of the width of the text, assuming a fixed width for each character. While not precise, this estimation helps in horizontally centering the text within the button. Adjustments to this estimation may be necessary depending on the font size and style used.
 
 ## Conclusion
 
