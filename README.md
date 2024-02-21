@@ -66,9 +66,9 @@ This framework provides a foundation for creating interactive Pyxel applications
 - Adding more interactive elements like sliders or checkboxes.
 - Creating a menu system using the button class.
 
-## Behind the Scenes: Drawing an Oval
+## Behind the Scenes: Text Size not defined
 
-Pyxel has not any declaration about `pyxel.text()` size, so i had to aproximately calculate it for each shape.
+Pyxel has not any declaration about `pyxel.text` size, so i had to aproximately calculate it for each shape.
 The approximate text size calculation is based on the length of the text string multiplied by an arbitrary value. This value is used as a rough estimate of the width of the text, assuming a fixed width for each character. While not precise, this estimation helps in horizontally centering the text within the button. Adjustments to this estimation may be necessary depending on the font size and style used.
 
 ## Conclusion
