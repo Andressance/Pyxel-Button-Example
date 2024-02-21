@@ -20,49 +20,49 @@ class Button:
             print("Button clicked")
             # Add your code here
 
-    def draw(self) -> None:
         
-        border_color = self.hovered_color if self.hovered() and self.hovered_color is not None else self.border_color
+    def draw(self) -> None:
+        # Set text color based on hover state
         text_color = self.hovered_text_color if self.hovered() and self.hovered_text_color is not None else self.color_text
+
+        # Calculate approximate text width based on text length
+        text_width = len(self.text) * 4  # Estimating text width, can be adjusted based on font size
 
         if self.circle:
             center = ((self.x + self.w) / 2, (self.y + self.h) / 2)
             if self.w == self.h:
                 if self.blank:
-                    pyxel.circb(self.x, self.y, self.w, border_color)
+                    pyxel.circb(self.x, self.y, self.w, self.border_color)
                 else:
-                    pyxel.circ(self.x, self.y, self.w, border_color)
-                text_x, text_y = center[0] - 5, center[1] - 3
+                    pyxel.circ(self.x, self.y, self.w, self.border_color)
             else:
-                self.draw_oval(self.x, self.y, self.w, self.h, border_color)
-                text_x, text_y = center[0] - 5, center[1] - 3
+                if self.blank:
+                    pyxel.ellib(self.x, self.y, self.w, self.h, self.border_color)
+                else:
+                    pyxel.elli(self.x, self.y, self.w, self.h, self.border_color)
+
+            # Calculate text position to center it horizontally and vertically within the circle button
+            text_x = self.x + (self.w - text_width) // 2  # Center text horizontally
+            text_y = self.y + (self.h - 6) // 2  # Center text vertically, manual adjustment for font size
         else:
             if self.blank:
-                pyxel.rectb(self.x, self.y, self.w, self.h, border_color)
+                pyxel.rectb(self.x, self.y, self.w, self.h, self.border_color)
             else:
-                pyxel.rect(self.x, self.y, self.w, self.h, border_color)
-            text_x, text_y = self.x + 5, self.y + 5
+                pyxel.rect(self.x, self.y, self.w, self.h, self.border_color)
 
+            # Calculate text position to center it horizontally and vertically within the rectangular button
+            text_x = self.x + (self.w - text_width) // 2  # Center text horizontally
+            text_y = self.y + (self.h - 6) // 2  # Center text vertically, manual adjustment for font size
+
+        # Render the text with calculated position and color
         pyxel.text(text_x, text_y, self.text, text_color)
-
 
     def hovered(self) -> bool:
         if not self.circle:
             mx, my = pyxel.mouse_x, pyxel.mouse_y
             return self.x < mx < self.x + self.w and self.y < my < self.y + self.h
-        elif self.circle and self.w == self.h:
+        else:
             mx, my = pyxel.mouse_x, pyxel.mouse_y
-            return (mx - self.x)**2 + (my - self.y)**2 < self.w**2
-        elif self.circle and self.w != self.h:
-            mx, my = pyxel.mouse_x, pyxel.mouse_y
-            return (mx - self.x)**2/self.w**2 + (my - self.y)**2/self.h**2 < 1
-        
-    def draw_oval(self, cx, cy, rx, ry, color):
-        steps = 200  
-        for i in range(steps):
-            angle = (2 * math.pi / steps) * i
-            x = cx + rx * math.cos(angle)
-            y = cy + ry * math.sin(angle)
-            pyxel.pset(x, y, color)  
-        
-    
+            center_x = self.x + self.w / 2
+            center_y = self.y + self.h / 2
+            return ((mx - center_x) ** 2) / ((self.w / 2) ** 2) + ((my - center_y) ** 2) / ((self.h / 2) ** 2) <= 1
