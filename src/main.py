@@ -23,6 +23,8 @@ class App:
             pyxel.text(5, 15, "Button not clicked", 7)
 
         pyxel.text(5, 25, "Mouse position: ({}, {})".format(pyxel.mouse_x, pyxel.mouse_y), 7)
+        
+        pyxel.text(5, 35, "Mouse button pressed: {}".format(pyxel.btn(pyxel.MOUSE_BUTTON_LEFT)), 7)
 
 if __name__ == "__main__":
     App()
